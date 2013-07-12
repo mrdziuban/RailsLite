@@ -22,10 +22,8 @@ class Params
     arr.each do |x|
       new_hash[x[0]] = x[1]
     end
-    new_hash
 
-    values = new_hash.values
-    keys = new_hash.keys
+    values, keys = new_hash.values, new_hash.keys
 
     arr = []
     keys.each do |key|
@@ -41,8 +39,7 @@ class Params
 
     return [key] if key_match.nil?
 
-    head = key_match["head"]
-    rest = key_match["rest"]
+    head, rest = key_match["head"], key_match["rest"]
 
     key_array.unshift(rest)
 
