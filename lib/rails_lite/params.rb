@@ -33,6 +33,7 @@ class Params
     create_hash(key_arr, values)
   end
 
+  # Returns an array of the path of keys in a nested hash
   def parse_key(key)
     key_array = []
     key_match = /(?<head>.*)\[(?<rest>.*)\]/.match(key)
@@ -49,6 +50,9 @@ class Params
     key_array.flatten
   end
 
+  # Takes an array of arrays (each inner array comes from #parse_key)
+  # and creates a nested hash in the format {key1 => {key2 => {key3 => value}}}
+  # rather than the format {key1[key2][key3] => value}
   def create_hash(key_arr, values)
     full_hash = {}
     nested_hash = {}

@@ -22,6 +22,7 @@ class ControllerBase
   end
 
   def redirect_to(url)
+    # Prevent double rendering
     unless @response_built
       @res.status = 302
       @res.header['location'] = url
@@ -31,6 +32,7 @@ class ControllerBase
   end
 
   def render_content(content, type)
+    # Prevent double rendering
     unless already_rendered?
       @res.body = content
       @res.content_type = type
