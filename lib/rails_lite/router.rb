@@ -14,6 +14,8 @@ class Route
   end
 
   def run(req, res)
+    controller = @controller_class.new(req, res)
+    controller.invoke_action(@action_name)
   end
 end
 
@@ -38,11 +40,12 @@ class Router
   end
 
   def match(req)
-    @routes.each do |route|
-      return route if route.matches?(req)
-    end
+    @routes.each {|route| return route if route.matches?(req)}
   end
 
   def run(req, res)
+    route = match(req)
+    res.status = 404 if route.nil?
+    route.run(req, res)
   end
 end
