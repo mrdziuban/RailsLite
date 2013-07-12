@@ -18,19 +18,19 @@ class Params
   private
   def parse_www_encoded_form(www_encoded_form)
     new_hash = {}
-    arr = URI.decode_www_form(www_encoded_form)
-    arr.each do |x|
+    decoded_arr = URI.decode_www_form(www_encoded_form)
+    decoded_arr.each do |x|
       new_hash[x[0]] = x[1]
     end
 
     values, keys = new_hash.values, new_hash.keys
 
-    arr = []
+    key_arr = []
     keys.each do |key|
-      arr << parse_key(key)
+      key_arr << parse_key(key)
     end
 
-    create_hash(arr, values)
+    create_hash(key_arr, values)
   end
 
   def parse_key(key)
