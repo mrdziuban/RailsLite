@@ -22,20 +22,20 @@ class ControllerBase
   end
 
   def redirect_to(url)
-    # unless @response_built
-    @res.status = 302
-    @res.header['location'] = url
-    @response_built = true
-    # end
+    unless @response_built
+      @res.status = 302
+      @res.header['location'] = url
+      @response_built = true
+    end
     @session.store_session(@res)
   end
 
   def render_content(content, type)
-    # unless already_rendered?
-    @res.body = content
-    @res.content_type = type
-    @already_rendered = true
-    # end
+    unless already_rendered?
+      @res.body = content
+      @res.content_type = type
+      @already_rendered = true
+    end
     @session.store_session(@res)
   end
 

@@ -2,10 +2,9 @@ require 'uri'
 
 class Params
   def initialize(req, route_params)
-    @params ||= {}
+    @params ||= route_params
     @params.merge!(parse_www_encoded_form(req.body.to_s)) if req.body
     @params.merge!(parse_www_encoded_form(req.query_string.to_s)) if req.query_string
-    @params.merge!(parse_www_encoded_form(route_params)) if route_params
   end
 
   def [](key)

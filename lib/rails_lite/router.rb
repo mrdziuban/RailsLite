@@ -14,7 +14,10 @@ class Route
   end
 
   def run(req, res)
-    controller = @controller_class.new(req, res)
+    match_data = @pattern.match(req.path)
+    route_params = Hash.new("id" => match_data["id"])
+
+    controller = @controller_class.new(req, res, route_params)
     controller.invoke_action(@action_name)
   end
 end
@@ -31,6 +34,7 @@ class Router
   end
 
   def draw(&proc)
+    instance_eval(&proc)
   end
 
   [:get, :post, :put, :delete].each do |http_method|
@@ -41,6 +45,7 @@ class Router
 
   def match(req)
     @routes.each {|route| return route if route.matches?(req)}
+    nil
   end
 
   def run(req, res)
